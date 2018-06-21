@@ -1,0 +1,38 @@
+apply plugin: 'com.android.application'
+dependencies {
+    implementation project(':android_lib')
+    implementation 'com.android.support:multidex:1.0.3'
+}
+
+android {
+    compileSdkVersion(27)
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId('org.odk.collect.android')
+        minSdkVersion(16)
+        multiDexEnabled true
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
+    // https://stackoverflow.com/a/27119543/152938
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = new File(outputFileName.replace(".apk", "-${defaultConfig.versionName}.apk"))
+        }
+    }
+    testVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = new File(outputFileName.replace(".apk", "-${defaultConfig.versionName}.apk"))
+        }
+    }
+
+}
